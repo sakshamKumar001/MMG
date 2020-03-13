@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name">Memory Match Game</string>
+    <string name="action_settings">Settings</string>
+</resources>
