@@ -20,8 +20,12 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
         setSupportActionBar(toolbar)
 
-       lateinit var mp: MediaPlayer
+        lateinit var mp: MediaPlayer
+        lateinit var vicSong: MediaPlayer
+        lateinit var vicDing: MediaPlayer
         mp= MediaPlayer.create(this,R.raw.meow)
+        vicSong= MediaPlayer.create(this,R.raw.win)
+        vicDing= MediaPlayer.create(this,R.raw.ding)
         val pictures: MutableList<Int> =
             mutableListOf(pic1, pic2, pic3, pic4, pic5, pic6, pic1, pic2, pic3, pic4, pic5, pic6)
         val victorymessages : MutableList<String> =
@@ -69,9 +73,11 @@ class MainActivity : AppCompatActivity() {
                         buttons[i].isClickable = false
                         buttons[lastClicked].isClickable = false
                         victory++
+                        vicDing.start()
                         if(victory==6)
                         {
                             Toast.makeText(applicationContext,victorymessages[(0..2).random()],Toast.LENGTH_SHORT).show()
+                            vicSong.start()
                         }
                         clicked = 0
                     }
@@ -79,8 +85,6 @@ class MainActivity : AppCompatActivity() {
                 {
                     mp.start()
                     Toast.makeText(applicationContext,wrongmatchmessages[(0..6).random()],Toast.LENGTH_SHORT).show()
-                    buttons[i].setBackgroundResource(pictures[i])
-                    //Thread.sleep(1500)
                     handler.postDelayed({
                      buttons[lastClicked].setBackgroundResource(cardBack)
                         buttons[lastClicked].text="cardBack"
@@ -94,6 +98,19 @@ class MainActivity : AppCompatActivity() {
                 }
                 }
             }
+        buttonReset.setOnClickListener{
+            for (i: Int in 0..11)
+            {
+                buttons[i].text = "cardBack"
+                buttons[i].textSize = 0.0F
+                buttons[i].setBackgroundResource(cardBack)
+                clicked = 0
+                lastClicked = -1
+                victory=0
+                buttons[i].isClickable = true
+                vicSong.stop()
+            }
+        }
 
         }
     }
