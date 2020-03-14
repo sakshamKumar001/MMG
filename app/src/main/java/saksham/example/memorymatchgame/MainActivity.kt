@@ -10,6 +10,7 @@ import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.content_main.*
 import saksham.example.memorymatchgame.R.drawable.*
 import android.widget.Toast
+import android.os.Handler;
 
 
 class MainActivity : AppCompatActivity() {
@@ -46,6 +47,7 @@ class MainActivity : AppCompatActivity() {
         var clicked = 0
         var lastClicked = -1
         var victory=0
+        val handler = Handler()
         pictures.shuffle()
         victorymessages.shuffle()
         wrongmatchmessages.shuffle()
@@ -78,11 +80,16 @@ class MainActivity : AppCompatActivity() {
                     mp.start()
                     Toast.makeText(applicationContext,wrongmatchmessages[(0..6).random()],Toast.LENGTH_SHORT).show()
                     buttons[i].setBackgroundResource(pictures[i])
-                    Thread.sleep(1500)
-                    buttons[lastClicked].setBackgroundResource(cardBack)
-                    buttons[lastClicked].text="cardBack"
-                    buttons[i].setBackgroundResource(cardBack)
-                    buttons[i].text="cardBack"
+                    //Thread.sleep(1500)
+                    handler.postDelayed({
+                     buttons[lastClicked].setBackgroundResource(cardBack)
+                        buttons[lastClicked].text="cardBack"
+                        buttons[i].setBackgroundResource(cardBack)
+                        buttons[i].text="cardBack"
+
+                    }, 1000)
+
+
                     clicked=0
                 }
                 }
